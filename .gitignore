@@ -1,5 +1,5 @@
 # Dataset path
-data/
+dataset/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
