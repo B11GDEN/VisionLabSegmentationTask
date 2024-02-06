@@ -1,0 +1,10 @@
+# pytorch
+rich
+nip-config
+numpy
+opencv-python
+torchmetrics
+lightning
+albumentations
+segmentation-models-pytorch
+scikit-learn
