@@ -12,10 +12,10 @@ from segmentation.data.transforms import ClipAndNorm, ConvertMask
 
 class KTDataset(Dataset):
     def __init__(
-        self,
-        data_dir: Path,
-        files: list[str],
-        transforms: A.Compose | None = None,
+            self,
+            data_dir: Path,
+            files: list[str],
+            transforms: A.Compose | None = None,
     ) -> None:
         super().__init__()
 
@@ -41,16 +41,16 @@ class KTDataset(Dataset):
 class KTDataModule(LightningDataModule):
 
     def __init__(
-        self,
-        data_dir: str,
-        train_transforms: A.Compose | None = None,
-        val_transforms: A.Compose | None = None,
-        test_transforms: A.Compose | None = None,
-        train_val_test_split: tuple[float, float, float] = (0.8, 0.1, 0.1),
-        batch_size: int = 64,
-        num_workers: int = 0,
-        pin_memory: bool = False,
-        seed: int = 42,
+            self,
+            data_dir: str,
+            train_transforms: A.Compose | None = None,
+            val_transforms: A.Compose | None = None,
+            test_transforms: A.Compose | None = None,
+            train_val_test_split: tuple[float, float, float] = (0.8, 0.1, 0.1),
+            batch_size: int = 64,
+            num_workers: int = 0,
+            pin_memory: bool = False,
+            seed: int = 42,
     ) -> None:
         super().__init__()
 
