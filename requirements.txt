@@ -1,5 +1,7 @@
 # pytorch
 rich
+wandb
+matplotlib
 nip-config
 numpy
 opencv-python
