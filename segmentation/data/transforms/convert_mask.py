@@ -1,14 +1,14 @@
 import numpy as np
 from albumentations import DualTransform
 
-ORGAN2CLASS = {
-    1: 1,  # селезенка
-    2: 2,  # правая почка
-    3: 3,  # левая почка
-    6: 4,  # печень
-    7: 5,  # желудок
-    8: 6,  # аорта
-    9: 7,  # поджелудочная железа
+LABEL2ORGAN = {
+    1: 'spleen',  # селезенка
+    2: 'right_kidney',  # правая почка
+    3: 'left_kidney',  # левая почка
+    6: 'liver',  # печень
+    7: 'stomach',  # желудок
+    8: 'aorta',  # аорта
+    9: 'pancreas',  # поджелудочная железа
 }
 
 
@@ -22,8 +22,8 @@ class ConvertMask(DualTransform):
 
     def apply_to_mask(self, raw_mask: np.ndarray, **params) -> np.ndarray:
         mask = np.zeros_like(raw_mask, dtype=np.int64)
-        for org, cl in ORGAN2CLASS.items():
-            mask[raw_mask == org] = cl
+        for idx, cl in enumerate(LABEL2ORGAN.keys()):
+            mask[raw_mask == cl] = (idx+1)
         return mask
 
     def __repr__(self):
