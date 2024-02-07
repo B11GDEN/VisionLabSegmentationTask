@@ -1,0 +1,69 @@
+# Dataset Params
+crop_size: &crop_size 256
+
+train_transforms: &train_transforms !Compose
+  transforms:
+    - !ClipAndNorm
+      min_value: -350
+      max_value: 400
+    - !PadIfNeeded
+      min_height: *crop_size
+      min_width: *crop_size
+    - !CropNonEmptyMaskIfExists
+      height: *crop_size
+      width: *crop_size
+    - !ConvertMask
+    - !ToTensorV2
+
+val_transforms: &val_transforms !Compose
+  transforms:
+    - !ClipAndNorm
+      min_value: -350
+      max_value: 400
+    - !PadWithDivisor
+      divisor: 32
+      value: 0
+    - !ConvertMask
+    - !ToTensorV2
+
+test_transforms: &test_transforms !Compose
+  transforms:
+    - !ClipAndNorm
+      min_value: -350
+      max_value: 400
+    - !PadWithDivisor
+      divisor: 32
+      value: 0
+    - !ConvertMask
+    - !ToTensorV2
+
+datamodule: !KTDataModule
+  data_dir: "./dataset"
+  train_val_test_split: (0.8, 0.1, 0.1)
+  batch_size: 8
+  train_transforms: *train_transforms
+  val_transforms: *val_transforms
+  test_transforms: *test_transforms
+
+# Model Params
+net: &net !Unet
+  in_channels: 1
+  classes: 8
+
+loss: &loss !DiceLoss
+  mode: 'multiclass'
+
+lit_module: !LitSegmenter
+  net: *net
+  loss: *loss
+
+# Train Params
+check_val_every_n_epoch: 1
+max_epochs: 50
+accumulate_grad_batches: 1
+accelerator: 'gpu'
+devices: 1
+
+# Logger
+project: "VisionLabTask"
+name: "baseline"
