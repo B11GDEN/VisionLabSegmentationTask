@@ -3,71 +3,50 @@ import numpy as np
 
 
 def plot_confusion_matrix(
-        conf_mat,
-        hide_spines=False,
-        hide_ticks=False,
-        figsize=None,
+        conf_mat: np.ndarray,
+        hide_spines: bool = False,
+        hide_ticks: bool = False,
+        figsize: tuple[int, int] | None = None,
         cmap=None,
-        colorbar=False,
-        show_absolute=True,
-        show_normed=False,
-        norm_colormap=None,
-        class_names=None,
+        colorbar: bool = False,
+        show_absolute: bool = True,
+        show_normed: bool = False,
+        norm_colormap: bool | None = None,
+        class_names: list[str] | None = None,
         figure=None,
         axis=None,
-        fontcolor_threshold=0.5,
-        show_in_percent=True
+        fontcolor_threshold: float = 0.5,
+        show_in_percent: bool = True
 ):
-    """Plot a confusion matrix via matplotlib.
-    Parameters
-    -----------
-    conf_mat : array-like, shape = [n_classes, n_classes]
-        Confusion matrix from evaluate.confusion matrix.
-    hide_spines : bool (default: False)
-        Hides axis spines if True.
-    hide_ticks : bool (default: False)
-        Hides axis ticks if True
-    figsize : tuple (default: (2.5, 2.5))
-        Height and width of the figure
-    cmap : matplotlib colormap (default: `None`)
-        Uses matplotlib.pyplot.cm.Blues if `None`
-    colorbar : bool (default: False)
-        Shows a colorbar if True
-    show_absolute : bool (default: True)
-        Shows absolute confusion matrix coefficients if True.
-        At least one of  `show_absolute` or `show_normed`
-        must be True.
-    show_normed : bool (default: False)
-        Shows normed confusion matrix coefficients if True.
-        The normed confusion matrix coefficients give the
-        proportion of training examples per class that are
-        assigned the correct label.
-        At least one of  `show_absolute` or `show_normed`
-        must be True.
-    norm_colormap : bool (default: False)
-        Matplotlib color normalization object to normalize the
-        color scale, e.g., `matplotlib.colors.LogNorm()`.
-    class_names : array-like, shape = [n_classes] (default: None)
-        List of class names.
-        If not `None`, ticks will be set to these values.
-    figure : None or Matplotlib figure  (default: None)
-        If None will create a new figure.
-    axis : None or Matplotlib figure axis (default: None)
-        If None will create a new axis.
-    fontcolor_threshold : Float (default: 0.5)
-        Sets a threshold for choosing black and white font colors
-        for the cells. By default all values larger than 0.5 times
-        the maximum cell value are converted to white, and everything
-        equal or smaller than 0.5 times the maximum cell value are converted
-        to black.
-    Returns
-    -----------
-    fig, ax : matplotlib.pyplot subplot objects
-        Figure and axis elements of the subplot.
-    Examples
-    -----------
-    For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
+    """
+    Plot a confusion matrix via matplotlib.
+
+    Args:
+        conf_mat (np.ndarray): array-like, shape = [n_classes, n_classes].
+        hide_spines (bool): Hides axis spines if True. Default  is `False`.
+        hide_ticks (bool): Hides axis ticks if True. Default is `False`.
+        figsize (tuple[int, int] | None): Height and width of the figure, Default is `None`.
+        cmap: Matplotlib colormap, Default is `None`. Uses matplotlib.pyplot.cm.Blues if `None`
+        colorbar (bool): Shows a colorbar if True. Default is `False`.
+        show_absolute (bool): Shows absolute confusion matrix coefficients if `True`.
+            At least one of  `show_absolute` or `show_normed` must be `True`. Default is `True`.
+        show_normed (bool): Shows normed confusion matrix coefficients if True.
+            The normed confusion matrix coefficients give the proportion of training examples per class that are
+            assigned the correct label. At least one of  `show_absolute` or `show_normed` must be `True`.
+        norm_colormap (bool | None): Matplotlib color normalization object to normalize the
+            color scale, e.g., `matplotlib.colors.LogNorm()`. Default is `None`.
+        class_names (list[str] | None): List of class names. If not `None`, ticks will be set to these values.
+            Default is `None`.
+        figure: `None` or Matplotlib figure. If `None` will create a new figure. Default is `None`.
+        axis: `None` or Matplotlib figure axis. If `None` will create a new axis. Default is `None`.
+        fontcolor_threshold (float): Sets a threshold for choosing black and white font colors
+            for the cells. By default all values larger than 0.5 times the maximum cell value are converted to white,
+            and everything equal or smaller than 0.5 times the maximum cell value are converted to black.
+            Default to 0.5.
+        show_in_percent (bool): show numbers in percent
+
+    Returns:
+        fig, ax: matplotlib.pyplot subplot objects. Figure and axis elements of the subplot.
     """
     if not (show_absolute or show_normed):
         raise AssertionError("Both show_absolute and show_normed are False")
