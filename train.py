@@ -32,7 +32,7 @@ if __name__ == "__main__":
     # Callbacks
     checkpoint_callback = ModelCheckpoint(
         monitor='val_average_dice',
-        filename='{epoch}-{val_dice:.3f}',
+        filename='{epoch}-{val_average_dice:.3f}',
         save_top_k=5,
         mode='max',
         save_weights_only=True
