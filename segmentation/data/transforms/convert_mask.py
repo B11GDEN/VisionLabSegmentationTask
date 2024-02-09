@@ -13,7 +13,15 @@ LABEL2ORGAN = {
 
 
 class ConvertMask(DualTransform):
+    """
+        Augmentations to translate source classes to range (0, N), where N is number of classes
 
+        Methods:
+            __init__: Initialize the `ConvertMask` object
+            apply: Apply augmentation to img
+            apply_to_mask: Apply augmentation to mask
+
+    """
     def __init__(self, always_apply: bool = True, p: float = 1.0):
         super().__init__(always_apply, p)
 

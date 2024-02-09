@@ -4,7 +4,22 @@ from albumentations import DualTransform
 
 
 class PadWithDivisor(DualTransform):
+    """
+        Pad bottom and right sides of img and mask with the `value`, so that their sides are divisible by `divisor`.
 
+        Note:
+            Augmentation is written to validate data on full images.
+
+        Attributes:
+            divisor (int): to make divisible by, Default to `32`
+            value (int): padding value, Default to `0`
+
+        Methods:
+            __init__: Initialize the `ClipAndNorm` object
+            apply: Apply augmentation to img
+            apply_to_mask: Apply augmentation to mask
+
+    """
     def __init__(self, divisor: int = 32, value: float = 0, always_apply: bool = True, p: float = 1.0):
         super().__init__(always_apply, p)
         self.divisor = divisor
