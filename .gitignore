@@ -1,4 +1,4 @@
-# Dataset path
+# Dataset and Log path
 dataset/
 lightning_logs/
 wandb/
