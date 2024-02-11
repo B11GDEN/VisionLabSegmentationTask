@@ -6,11 +6,12 @@ from lightning import Trainer
 from lightning.pytorch.tuner import Tuner
 from lightning.pytorch.loggers import WandbLogger
 from lightning.pytorch.callbacks import ModelCheckpoint, LearningRateMonitor, RichProgressBar
+from segmentation.callbacks import ModelSaver
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--config", dest="config", type=str, help="# path to config")
+    parser = argparse.ArgumentParser(description="Training Cycle")
+    parser.add_argument("--config", type=str, help="# path to config")
 
     args = parser.parse_args()
     return args
@@ -30,12 +31,11 @@ if __name__ == "__main__":
     lit_module = config['lit_module']
 
     # Callbacks
-    checkpoint_callback = ModelCheckpoint(
+    checkpoint_callback = ModelSaver(
         monitor='val_average_dice',
         filename='{epoch}-{val_average_dice:.3f}',
         save_top_k=5,
         mode='max',
-        save_weights_only=True
     )
     lr_monitor = LearningRateMonitor(logging_interval='epoch')
     rich_progress = RichProgressBar()
@@ -60,9 +60,9 @@ if __name__ == "__main__":
     )
 
     # Find best learning rate
-    tuner = Tuner(trainer)
-    tuner.lr_find(lit_module, datamodule,
-                  max_lr=1e-2, min_lr=1e-8, num_training=1000)
+    # tuner = Tuner(trainer)
+    # tuner.lr_find(lit_module, datamodule,
+    #               max_lr=1e-2, min_lr=1e-8, num_training=1000)
 
     # Train Model
     trainer.fit(lit_module, datamodule)
